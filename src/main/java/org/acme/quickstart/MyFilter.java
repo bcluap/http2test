@@ -4,11 +4,7 @@
  */
 package org.acme.quickstart;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import javax.annotation.Priority;
-import javax.interceptor.Interceptor;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
@@ -22,12 +18,7 @@ public class MyFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        
-        InputStream stream = new BufferedInputStream(requestContext.getEntityStream());
-        stream.mark(1000);
-        log.warn("Data: [{}]", new String(stream.readAllBytes()));
-        stream.reset();
-        requestContext.setEntityStream(stream);
+        requestContext.getEntityStream().readAllBytes();
     }
 
 }
